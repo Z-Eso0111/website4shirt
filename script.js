@@ -1,52 +1,56 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #f0f0f0;
+document.getElementById('imageUpload').addEventListener('change', handleImageUpload);
+document.getElementById('backgroundColor').addEventListener('input', changeBackgroundColor);
+document.getElementById('resetButton').addEventListener('click', resetCanvas);
+document.getElementById('itemType').addEventListener('change', updateCanvasBackground);
+
+function handleImageUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const img = document.createElement('img');
+    img.src = URL.createObjectURL(file);
+    img.className = 'resizable';
+    img.onload = () => URL.revokeObjectURL(img.src); // Free memory
+    img.draggable = true;
+
+    img.addEventListener('dragstart', dragStart);
+    img.addEventListener('dragend', dragEnd);
+
+    document.getElementById('canvas').appendChild(img);
 }
 
-header {
-    background-color: #007bff;
-    color: white;
-    padding: 1em;
-    width: 100%;
-    text-align: center;
+function changeBackgroundColor(event) {
+    document.getElementById('canvas').style.backgroundColor = event.target.value;
 }
 
-main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
+function resetCanvas() {
+    document.getElementById('canvas').innerHTML = '';
+    document.getElementById('canvas').style.backgroundColor = 'white';
+    updateCanvasBackground();
 }
 
-.options, .upload-section, .controls {
-    margin-bottom: 20px;
+function updateCanvasBackground() {
+    const itemType = document.getElementById('itemType').value;
+    const canvas = document.getElementById('canvas');
+
+    if (itemType === 'Shirt') {
+        canvas.style.backgroundImage = "url('Shirt.png')";
+    } else if (itemType === 'Pant') {
+        canvas.style.backgroundImage = "url('Pant.png')";
+    }
 }
 
-.canvas-container {
-    border: 1px solid #ccc;
-    width: 600px;
-    height: 600px;
-    position: relative;
-    background-color: white;
+let offsetX, offsetY;
+
+function dragStart(event) {
+    offsetX = event.clientX - event.target.offsetLeft;
+    offsetY = event.clientY - event.target.offsetTop;
 }
 
-#canvas {
-    width: 100%;
-    height: 100%;
-    position: relative;
+function dragEnd(event) {
+    event.target.style.left = `${event.clientX - offsetX}px`;
+    event.target.style.top = `${event.clientY - offsetY}px`;
 }
 
-#canvas img {
-    position: absolute;
-    cursor: move;
-}
-
-.resizable {
-    resize: both;
-    overflow: auto;
-}
+// Initially set the canvas background based on the default selection
+updateCanvasBackground();
