@@ -1,41 +1,58 @@
-document.getElementById('imageUpload').addEventListener('change', handleImageUpload);
-document.getElementById('backgroundColor').addEventListener('input', changeBackgroundColor);
-document.getElementById('resetButton').addEventListener('click', resetCanvas);
-
-function handleImageUpload(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const img = document.createElement('img');
-    img.src = URL.createObjectURL(file);
-    img.style.position = 'absolute';
-    img.style.cursor = 'move';
-    img.onload = () => URL.revokeObjectURL(img.src); // Free memory
-    img.draggable = true;
-
-    img.addEventListener('dragstart', dragStart);
-    img.addEventListener('dragend', dragEnd);
-
-    document.getElementById('canvas').appendChild(img);
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f0f0f0;
 }
 
-function changeBackgroundColor(event) {
-    document.getElementById('canvas').style.backgroundColor = event.target.value;
+header {
+    background-color: #007bff;
+    color: white;
+    padding: 1em;
+    width: 100%;
+    text-align: center;
 }
 
-function resetCanvas() {
-    document.getElementById('canvas').innerHTML = '';
-    document.getElementById('canvas').style.backgroundColor = 'white';
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
 }
 
-let offsetX, offsetY;
-
-function dragStart(event) {
-    offsetX = event.clientX - event.target.offsetLeft;
-    offsetY = event.clientY - event.target.offsetTop;
+.selection-section, .upload-section, .controls {
+    margin-bottom: 20px;
 }
 
-function dragEnd(event) {
-    event.target.style.left = `${event.clientX - offsetX}px`;
-    event.target.style.top = `${event.clientY - offsetY}px`;
+.canvas-container {
+    border: 1px solid #ccc;
+    width: 500px;
+    height: 500px;
+    position: relative;
+    background-color: white;
+}
+
+#canvas {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-size: cover;
+}
+
+#model {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.draggable {
+    position: absolute;
+    cursor: move;
+    resize: both;
+    overflow: auto;
 }
