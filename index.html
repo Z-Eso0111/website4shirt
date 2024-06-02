@@ -11,6 +11,13 @@
         <h1>Roblox Kıyafet Yapma Sitesi</h1>
     </header>
     <main>
+        <div class="selection-section">
+            <label for="itemType">Kıyafet Türü Seçin:</label>
+            <select id="itemType">
+                <option value="Shirt">T-Shirt</option>
+                <option value="Pant">Pantolon</option>
+            </select>
+        </div>
         <div class="upload-section">
             <label for="imageUpload">Resim Yükle:</label>
             <input type="file" id="imageUpload" accept="image/*">
@@ -21,7 +28,9 @@
             <button id="resetButton">Sıfırla</button>
         </div>
         <div class="canvas-container">
-            <div id="canvas"></div>
+            <div id="canvas">
+                <img id="model" src="Shirt.png" alt="Model">
+            </div>
         </div>
     </main>
     <script src="script.js"></script>
