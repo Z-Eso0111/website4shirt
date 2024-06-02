@@ -23,14 +23,14 @@ main {
     margin-top: 20px;
 }
 
-.selection-section, .upload-section, .controls {
+.options, .upload-section, .controls {
     margin-bottom: 20px;
 }
 
 .canvas-container {
     border: 1px solid #ccc;
-    width: 500px;
-    height: 500px;
+    width: 600px;
+    height: 600px;
     position: relative;
     background-color: white;
 }
@@ -39,20 +39,14 @@ main {
     width: 100%;
     height: 100%;
     position: relative;
-    background-size: cover;
 }
 
-#model {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-
-.draggable {
+#canvas img {
     position: absolute;
     cursor: move;
+}
+
+.resizable {
     resize: both;
     overflow: auto;
 }
